@@ -1,4 +1,4 @@
 name = "PiAVRDude"
 uuid = "fc7a79b2-3e76-4256-aa87-83c70dbc2f22"
 authors = ["notinaboat <notinaboat@icloud.com>"]
-version = "0.1.0"
+version = "0.1.1"

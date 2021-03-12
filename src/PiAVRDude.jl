@@ -40,7 +40,7 @@ function avrdude(isp, cmd)
         write(conf, config(isp))
         options = `-p $(isp.device) -C +$conf -c $(isp.name)`
         cmd = `avrdude $options $cmd`
-        println("Running: ", cmd)
+        @info cmd
         run(cmd)
     end
 end
