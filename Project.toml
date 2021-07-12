@@ -2,3 +2,6 @@ name = "PiAVRDude"
 uuid = "fc7a79b2-3e76-4256-aa87-83c70dbc2f22"
 authors = ["notinaboat <notinaboat@icloud.com>"]
 version = "0.1.2"
+
+[deps]
+UnixIO = "86724fa0-f1e0-464a-a4b2-d754f3ca1f13"

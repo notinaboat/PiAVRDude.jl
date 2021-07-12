@@ -7,27 +7,39 @@ module PiAVRDude
 
 export AVRDude
 
+using UnixIO
+
 struct AVRDude
 
     name::String
     device::String
     config::String
+    usb_port::Union{Nothing, String}
 
     function AVRDude(;device=nothing,
-                      sck=nothing, miso=nothing, mosi=nothing, reset=nothing)
-        name = "gpio$reset"
-        new(name, device, """
-            default_safemode = no;
-            programmer
-              id    = "$name";
-              desc  = "GPIO ISP";
-              type  = "linuxgpio";
-              sck   = $sck;
-              miso  = $miso;
-              mosi  = $mosi;
-              reset = $reset;
-            ;
-            """)
+                      sck=nothing, miso=nothing, mosi=nothing, reset=nothing,
+                      usb_port=nothing)
+        if usb_port != nothing
+            new("avrisp2", device, """
+                default_safemode = no;
+                """,
+                usb_port)
+        else
+            name = "gpio$reset"
+            new(name, device, """
+                default_safemode = no;
+                programmer
+                  id    = "$name";
+                  desc  = "GPIO ISP";
+                  type  = "linuxgpio";
+                  sck   = $sck;
+                  miso  = $miso;
+                  mosi  = $mosi;
+                  reset = $reset;
+                ;
+                """,
+                nothing)
+        end
     end
 end
 
@@ -40,9 +52,12 @@ function avrdude(isp, cmd)
         conf=joinpath(d, "avrdude.conf")
         write(conf, config(isp))
         options = `-p $(isp.device) -C +$conf -c $(isp.name)`
+        if isp.usb_port != nothing
+            options = `$options -D -P $(isp.usb_port)`
+        end
         cmd = `avrdude $options $cmd`
         @info cmd
-        run(cmd)
+        UnixIO.system(cmd)
     end
 end
 
