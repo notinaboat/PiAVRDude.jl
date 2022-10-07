@@ -1,0 +1,12 @@
+# This file is machine-generated - editing it directly is not advised
+
+[[ReadmeDocs]]
+path = "../ReadmeDocs"
+uuid = "c63066b3-de92-487d-9da7-7c375a07912b"
+version = "0.1.0"
+
+[[UnixIO]]
+deps = ["ReadmeDocs"]
+path = "../UnixIO"
+uuid = "86724fa0-f1e0-464a-a4b2-d754f3ca1f13"
+version = "0.1.0"
